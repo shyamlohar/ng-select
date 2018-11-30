@@ -102,6 +102,7 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
     @Input() selectableGroupAsModel = true;
     @Input() searchFn = null;
     @Input() clearOnBackspace = true;
+    @Input() selectOnBlur = false;
 
     @Input() labelForId = null;
     @Input() @HostBinding('class.ng-select-typeahead') typeahead: Subject<string>;
@@ -176,6 +177,7 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
     private readonly _keyPress$ = new Subject<string>();
     private _onChange = (_: NgOption) => { };
     private _onTouched = () => { };
+    private filterValueClone: string = null;
 
     clearItem = (item: any) => {
         const option = this.selectedItems.find(x => x.value === item);
@@ -487,6 +489,7 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
         }
 
         this.searchEvent.emit(term);
+        this.filterValueClone = term;
     }
 
     onInputFocus($event) {
@@ -500,6 +503,12 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
     }
 
     onInputBlur($event) {
+        console.log(this.filterValue, this.selectedItems);
+        if (this.selectOnBlur && this.filterValueClone && this.filterValueClone.trim().length > 0 && this.selectedItems.length === 0) {
+            this.filterValue = this.filterValueClone;
+            this.filterValueClone = null;
+            this.selectTag()
+        }
         this.element.classList.remove('ng-select-focused');
         this.blurEvent.emit($event);
         if (!this.isOpen && !this.disabled) {
