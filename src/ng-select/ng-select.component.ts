@@ -492,7 +492,9 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
         }
 
         this.searchEvent.emit(term);
-        this.filterValueClone = term;
+        if (this.selectOnBlur) {
+            this.filterValueClone = term;
+        }
     }
 
     onInputFocus($event) {
