@@ -435,6 +435,9 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
         let tag;
         if (isFunction(this.addTag)) {
             tag = (<AddTagFn>this.addTag)(this.filterValue);
+            if (this.selectOnBlur) {
+                this.filterValueClone = null;
+            }
         } else {
             tag = this._primitive ? this.filterValue : { [this.bindLabel]: this.filterValue };
         }
@@ -504,7 +507,7 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
 
     onInputBlur($event) {
         console.log(this.filterValue, this.selectedItems);
-        if (this.selectOnBlur && this.filterValueClone && this.filterValueClone.trim().length > 0 && this.selectedItems.length === 0) {
+        if (this.selectOnBlur && this.filterValueClone && this.filterValueClone.trim().length > 0) {
             this.filterValue = this.filterValueClone;
             this.filterValueClone = null;
             this.selectTag()
@@ -721,6 +724,9 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
         if (!this.isOpen) {
             return;
         }
+        if (this.selectOnBlur) {
+            this.filterValueClone = null;
+        }
         if (this.selectOnTab) {
             if (this.itemsList.markedItem) {
                 this.toggleItem(this.itemsList.markedItem);
@@ -737,6 +743,9 @@ export class NgSelectComponent implements OnDestroy, OnChanges, AfterViewInit, C
     }
 
     private _handleEnter($event: KeyboardEvent) {
+        if (this.selectOnBlur) {
+            this.filterValueClone = null;
+        }
         if (this.isOpen || this._manualOpen) {
             if (this.itemsList.markedItem) {
                 this.toggleItem(this.itemsList.markedItem);
