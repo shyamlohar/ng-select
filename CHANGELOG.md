@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.13.3"></a>
+## [2.13.3](https://github.com/ng-select/ng-select/compare/v2.13.2...v2.13.3) (2018-12-04)
+
+
+
 <a name="2.13.2"></a>
 ## [2.13.2](https://github.com/ng-select/ng-select/compare/v2.13.0...v2.13.2) (2018-12-01)
 
