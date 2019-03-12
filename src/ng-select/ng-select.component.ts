@@ -581,9 +581,10 @@ export class NgSelectComponent
             .trim()
       );
       if (exists) {
-        this.filterValue = exists.label;
+        this.select(exists);
+      } else {
+        this.selectTag();
       }
-      this.selectTag();
     }
     this.element.classList.remove("ng-select-focused");
     this.blurEvent.emit($event);
