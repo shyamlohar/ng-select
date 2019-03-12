@@ -572,18 +572,18 @@ export class NgSelectComponent
     ) {
       this.filterValue = this.filterValueClone;
       this.filterValueClone = null;
+      const exists = this.itemsList.items.find(
+        item =>
+          searchHelper.stripSpecialChars(item.label).toLocaleLowerCase() ===
+          searchHelper
+            .stripSpecialChars(this.filterValue)
+            .toLocaleLowerCase()
+            .trim()
+      );
+      if (exists) {
+        this.filterValue = exists.label;
+      }
       this.selectTag();
-    }
-    const exists = this.itemsList.items.find(
-      item =>
-        searchHelper.stripSpecialChars(item.label).toLocaleLowerCase() ===
-        searchHelper
-          .stripSpecialChars(this.filterValue)
-          .toLocaleLowerCase()
-          .trim()
-    );
-    if (exists) {
-      this.filterValue = exists.label;
     }
     this.element.classList.remove("ng-select-focused");
     this.blurEvent.emit($event);
